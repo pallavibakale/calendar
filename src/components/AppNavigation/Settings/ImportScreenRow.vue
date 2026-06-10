@@ -27,7 +27,7 @@ import { getLanguage } from '@nextcloud/l10n'
 import { mapStores } from 'pinia'
 import CalendarPicker from '../../Shared/CalendarPicker.vue'
 import useCalendarsStore from '../../../store/calendars.js'
-import useImportFilesStore from '../../../store/importFiles.js'
+import useImportStore from '../../../store/import.ts'
 import usePrincipalsStore from '../../../store/principals.js'
 import { uidToHexColor } from '../../../utils/color.js'
 
@@ -45,7 +45,7 @@ export default {
 	},
 
 	computed: {
-		...mapStores(usePrincipalsStore, useImportFilesStore, useCalendarsStore),
+		...mapStores(usePrincipalsStore, useImportStore, useCalendarsStore),
 		newCalendar() {
 			return {
 				id: 'new',
@@ -57,7 +57,7 @@ export default {
 		},
 
 		calendar() {
-			const calendarId = this.importFilesStore.importCalendarRelation[this.file.id]
+			const calendarId = this.importStore.importCalendarRelation[this.file.id]
 			if (calendarId === this.newCalendar.id) {
 				return this.newCalendar
 			}
@@ -127,7 +127,7 @@ export default {
 		},
 
 		selectCalendar(newCalendar) {
-			this.importFilesStore.setCalendarForFileId({
+			this.importStore.setCalendarForFileId({
 				fileId: this.file.id,
 				calendarId: newCalendar.id,
 			})

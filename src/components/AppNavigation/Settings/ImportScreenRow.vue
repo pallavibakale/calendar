@@ -5,7 +5,7 @@
 
 <template>
 	<li class="import-modal-file-item">
-		<NcFormGroup :label="$t('calendar', 'Calendar to import into')">
+		<NcFormGroup :label="$t('calendar', 'Calendar to import into')" :description="disabledHint">
 			<NcFormBox v-slot="{ itemClass }">
 				<CalendarPicker
 					:class="itemClass"

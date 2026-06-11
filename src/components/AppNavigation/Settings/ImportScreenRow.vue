@@ -5,25 +5,25 @@
 
 <template>
 	<li class="import-modal-file-item">
-		<div class="import-modal-file-item__filename">
-			<div>{{ file.name }}</div>
-			<div
-				v-if="disabledHint"
-				class="import-modal-file-item__calendar-disabled-hint">
-				{{ disabledHint }}
-			</div>
-		</div>
-		<CalendarPicker
-			class="import-modal-file-item__calendar-select"
-			:value="calendar"
-			:calendars="calendars"
-			:isCalendarSelectable="isCalendarSelectable"
-			@selectCalendar="selectCalendar" />
+		<NcFormGroup :label="$t('calendar', 'Calendar to import into')">
+			<NcFormBox v-slot="{ itemClass }">
+				<CalendarPicker
+					:class="itemClass"
+					:value="calendar"
+					:calendars="calendars"
+					:isCalendarSelectable="isCalendarSelectable"
+					@selectCalendar="selectCalendar" />
+			</NcFormBox>
+			<NcFormBox v-slot="{ itemClass }">
+				<NcFormBoxCopyButton :class="itemClass" :label="$t('calendar', 'File')" :value="file.name" />
+			</NcFormBox>
+		</NcFormGroup>
 	</li>
 </template>
 
 <script>
 import { getLanguage } from '@nextcloud/l10n'
+import { NcFormBox, NcFormBoxCopyButton, NcFormGroup } from '@nextcloud/vue'
 import { mapStores } from 'pinia'
 import CalendarPicker from '../../Shared/CalendarPicker.vue'
 import useCalendarsStore from '../../../store/calendars.js'
@@ -35,6 +35,9 @@ export default {
 	name: 'ImportScreenRow',
 	components: {
 		CalendarPicker,
+		NcFormBox,
+		NcFormBoxCopyButton,
+		NcFormGroup,
 	},
 
 	props: {
